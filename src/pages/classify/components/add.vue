@@ -81,7 +81,6 @@ export default {
         img:null,
         status: 1,
       },
-
       defaultProps: {
         children: "children",
         label: "label",

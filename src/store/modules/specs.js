@@ -1,33 +1,33 @@
-import Vue from "vue"
+import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-import {reqspecsList} from '../../util/request'
 
+import { reqspecsList } from '../../util/request'
 const state = {
-    list : []   
+    list: [],//请求的数据
+
 }
 const mutations = {
-    changeList(state,arr){
+    changeList(state, arr) {
         state.list = arr
-    }
-}
+    },
 
+}
 const actions = {
     requestspecsList(context) {
         reqspecsList({
           size:10,
           page:1
         }).then(res => {
+
             var arr = res.data.list;
-            console.log(arr)
-            // attrs:'['27','28]'
-            // console.log(arr)  ->包含所有属性
-            arr.forEach(item=>{
-                item.attrs = JSON.parse(item.attrs)
-                console.log(item.attrs)  //=>['27,28,29']
-            })
+            // console.log(arr) // ->所有的属性
+            // arr.forEach(item=>{
+            //     item.attrs = JSON.parse(item.attrs)
+            //     console.log(item.attrs)  //['s,l,m']
+            // })
 
             context.commit('changeList', arr)
         })
@@ -35,15 +35,16 @@ const actions = {
 
 }
 const getters = {
-    list(state){
+    list(state) {
         return state.list
-    }
+    },
+
 }
 
-export default{
+export default {
     state,
     mutations,
     actions,
     getters,
-    namespaced:true
+    namespaced: true
 }

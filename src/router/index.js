@@ -88,8 +88,12 @@ export default new Router({
       ]
     },
     {
+      path:"/",
+      component:login
+    },
+    {
       path:"*",
-      redirect:"index/spec"
+      redirect:"login"
     }
   ]
 })

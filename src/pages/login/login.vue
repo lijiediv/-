@@ -2,24 +2,41 @@
 <div class="box">
     <div class="con">
         <h3>登录</h3>
-        <div class="inp"><input type="text"> </div>
-        <div class="inp"><input type="text"></div>
+        <div class="inp"><input type="text" v-model="user.username"> </div>
+        <div class="inp"><input type="text" v-model="user.password"></div>
         <div class="inp"><button @click="login()">登录</button></div>
     </div>
 </div>
 </template>
 <script>
+import { requserLogin } from "../../util/request";
+import {mapGetters,mapActions} from 'vuex'
 export default {
 components:{
  },
 data () {
  return {
+     user:{
+         username:"",
+         password:""
+     }
  }
 },
 methods:{
     login(){
-        this.$router.push("/index/home")
-    }
+        requserLogin(this.user).then(res=>{
+            if(res.data.code==200){
+            this.requestuserList(res.data.list)
+            this.$router.push("/index/home")
+            }else{
+                alert(res.data.msg)
+            }
+        })
+    },
+    ...mapActions({
+        requestuserList:"user/requestuserList"
+    })
+
 },
 mounted(){
 }

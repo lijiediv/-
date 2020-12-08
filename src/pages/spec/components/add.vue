@@ -2,29 +2,28 @@
   <div>
     <el-dialog :title="info.title" :visible.sync="info.isShow">
       <el-form :model="form">
-        
-
-        <el-form-item label="分类名称" :label-width="width">
+        <el-form-item label="规格名称" :label-width="width">
           <el-input v-model="form.specsname" autocomplete="off"></el-input>
         </el-form-item>
 
-    
-        <el-form-item label="分类名称" :label-width="width"
+        <el-form-item
+          label="规格属性"
+          :label-width="width"
           v-for="(item, index) in arrAttr"
-          :key="index">
-          
-             <el-row>
-         <el-col :span="18">
-           <el-input v-model="item.value" autocomplete="off"></el-input>
-         </el-col>
-         <el-col :span="4">
-          <el-button type="primary" v-if="index == 0"
-          @click="addAttr"  >新增规格属性</el-button>
-          <el-button type="danger" v-else @click="delAttr(index)">删除</el-button>
-         </el-col>
-        </el-row>
+          :key="index"
+        >
+          <el-row>
+            <el-col :span="16">
+              <el-input v-model="item.value" autocomplete="off"></el-input>
+            </el-col>
+            <el-col :span="4">
+              <el-button type="primary" v-if="index == 0" @click="addAttr"
+                >新增规格属性</el-button
+              >
+              <el-button type="danger" v-else @click="delAttr(index)">删除</el-button>
+            </el-col>
+          </el-row>
         </el-form-item>
-
 
         <el-form-item label="状态" :label-width="width">
           <el-switch
@@ -48,94 +47,89 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
-import { reqspecsAdd} from "../../../util/request";
+import { mapActions, mapGetters } from "vuex";
+import { reqspecsAdd,reqspecsListOne,reqspecsEdit} from "../../../util/request";
 export default {
   props: ["info"],
   computed: {
     ...mapGetters({
-      // cateList: "cate/list",
+    //   cateList: "cate/list",
     }),
   },
   components: {},
   data() {
     return {
       width: "160px",
-     
       form: {
         specsname: "",
         attrs: "",
         status: 1,
       },
-      arrAttr:[
+      //   arrAttr[{value:'红色'}，{value:'白色'}]   arrAttr->['白色'，’红色‘]
+      arrAttr: [
         {
-          value:"",
-        }
-      ]
+          value: "",
+        },
+      ],
     };
   },
   methods: {
-    
-    //重置
+    // 重置
     empty() {
       this.form = {
         specsname: "",
         attrs: "",
         status: 1,
-      }
+      };
     },
-    //隐藏
+    // 隐藏
     hide() {
       this.info.isShow = false;
     },
-    //新增属性
-    addAttr(){
-      this.arrAttr.push({
-        value:""
-      })
-    },
-    //删除属性
-    delAttr(index){
-      this.arrAttr.splice(index,1)
-    },
-
+    //添加
     add() {
-      this.form.attrs=JSON.stringify(this.arrAttr.map(item=>{return item.value}))
-      // console.log(this.form.attrs)
+        // [{value:'s'},{value:'m'},{value:'l'}]  ->['s','m','l']
+        this.form.attrs=JSON.stringify(this.arrAttr.map(item=>{return item.value})) 
+        // console.log(this.arrAttr.map(item=>{return item.value}))
       reqspecsAdd(this.form).then((res) => {
         this.empty();
         this.hide();
-        // this.requestspecsList();
       });
-      
     },
-
-
-
-
-
-
+    // 新增属性
+    addAttr() {
+        this.arrAttr.push({
+            value:""
+        })
+    },
+    // 删除
+    delAttr(index){
+        this.arrAttr.splice(index,1)
+    },
     ...mapActions({
-      // requestspecsList: "specs/requestspecsList",
+      requestcateList: "cate/requestcateList",
     }),
-    //获取一条数据
+
+    // 获取一条数据
     look(id) {
-      // reqcateListOne({ id: id }).then((res) => {
-      //   this.form = res.data.list;
-      //   this.form.id = id;
-      //   this.imageUrl = this.$perImg+res.data.list.img
-      // });
+      reqspecsListOne({ id: id }).then((res) => {
+        this.form = res.data.list[0];  
+        this.form.id = id;
+        console.log(this.form)
+    //    this.arrAttr =JSON.parse(this.form.attrs).map(item=>{return {value:item}})
+        this.arrAttr = this.form.attrs
+      });
     },
     update() {
-      // reqcateEdit(this.form).then((res) => {
-      //   this.requestcateList();
-      //   this.hide();
-      // });
+        this.form.attrs=JSON.stringify(this.arrAttr.map(item=>{return item.value})) 
+      reqspecsEdit(this.form).then((res) => {
+        this.requestcateList();
+        this.hide();
+      });
     },
   },
   mounted() {
-      // this.requestspecsList();
-    // console.log(this.menuList);
+    this.requestcateList();
   },
 };
 </script>

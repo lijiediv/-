@@ -156,6 +156,16 @@ export const requserCount=()=>{
     })
 }
 
+// 管理员登录
+export const requserLogin=(data)=>{
+    return axios({
+        url:baseUrl+'/api/userlogin',
+        method:'post',
+        data:data
+    })
+}
+
+
 
 //////////////////////////商品分类管理///////////////////////////////////
 // 商品分类添加
