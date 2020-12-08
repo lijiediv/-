@@ -107,7 +107,13 @@ export default {
         this.hide();
         // this.requestspecsList();
       });
+      
     },
+
+
+
+
+
 
     ...mapActions({
       // requestspecsList: "specs/requestspecsList",
