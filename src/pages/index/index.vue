@@ -3,30 +3,34 @@
     <el-container>
       <el-aside width="200px">
         <el-menu
-          default-active="2"
+          default-active="/index/home"
           router
           class="el-menu-vertical-demo"
           background-color="#20222A"
           text-color="#fff"
           active-text-color="#ffd04b"
         >
-          <el-menu-item index="2">
+          <el-menu-item index="/index/home">
             <i class="el-icon-menu"></i>
             <span slot="title">首页</span>
           </el-menu-item>
-          <el-submenu index="1">
+          <div v-for="item in list.menus" :key="item.id">
+            <el-submenu :index="item.url" v-if="item.children">
             <template slot="title">
               <i class="el-icon-s-tools"></i>
-              <span>系统设置</span>
+              <span>{{item.title}}</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/index/menu">菜单管理</el-menu-item>
+              <el-menu-item :index="'/index'+i.url" v-for="i in item.children" :key="i.id">{{i.title}}</el-menu-item>
+              <!-- <el-menu-item index="/index/menu">菜单管理</el-menu-item>
               <el-menu-item index="/index/role">角色管理</el-menu-item>
-              <el-menu-item index="/index/manger">管理员管理</el-menu-item>
+              <el-menu-item index="/index/manger">管理员管理</el-menu-item> -->
             </el-menu-item-group>
           </el-submenu>
+          <el-menu-item v-else :index="item.url">{{item.title}}</el-menu-item>
+          </div>
 
-          <el-submenu index="3">
+          <!-- <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-s-goods"></i>
               <span>商城管理</span>
@@ -39,7 +43,7 @@
               <el-menu-item index="/index/banner">轮播图管理</el-menu-item>
               <el-menu-item index="/index/seckill">秒杀活动</el-menu-item>
             </el-menu-item-group>
-          </el-submenu>
+          </el-submenu> -->
         </el-menu>
       </el-aside>
       <el-container>

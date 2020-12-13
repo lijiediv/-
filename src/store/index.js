@@ -8,6 +8,8 @@ import manger from './modules/manger'
 import cate from './modules/cate'
 import specs from './modules/specs'
 import user from './modules/user'
+import goods from './modules/goods'
+import vip from './modules/vip'
 export default new Vuex.Store({
         modules:{
             menu,
@@ -15,6 +17,8 @@ export default new Vuex.Store({
             manger,
             cate,
             specs,
-            user
+            user,
+            goods,
+            vip
         }
 })

@@ -271,3 +271,98 @@ export const reqspecsDel=(id)=>{
         data:id
     })
 }
+
+
+
+//////////////////////////商品管理管理///////////////////////////////////
+// 商品管理添加
+export const reqgoodsAdd=(data)=>{
+    //由于上传的是文件  所以需要用qs转一下
+    //非文件 qs.stringify(data)
+    //上传了文件报错  解决报错的方法
+    var form = new FormData()
+    for(var i in data){
+        form.append(i,data[i])
+    }
+    
+
+    return axios({
+        url:baseUrl+'/api/goodsadd',
+        method:'post',
+        data:form
+    })
+}
+// 商品管理列表
+export const reqgoodsList=(params)=>{
+    return axios({
+        url:baseUrl+'/api/goodslist',
+        method:'get',
+        params:params
+    })
+}
+
+// 商品管理一条数据
+export const reqgoodsListOne=(id)=>{
+    return axios({
+        url:baseUrl+'/api/goodsinfo',
+        method:'get',
+        params:id
+    })
+}
+
+// 商品管理编辑
+export const reqgoodsEdit=(data)=>{
+    var form = new FormData()
+    for(var i in data){
+        form.append(i,data[i])
+    }
+
+    return axios({
+        url:baseUrl+'/api/goodsedit',
+        method:'post',
+        data:form
+    })
+}
+
+// 商品管理删除
+export const reqgoodsDel=(id)=>{
+    return axios({
+        url:baseUrl+'/api/goodsdelete',
+        method:'post',
+        data:id
+    })
+}
+
+
+////////////////////////会员管理///////////////////////////////////
+
+//会员列表
+export const reqvipList=()=>{
+    return axios({
+        url:baseUrl+'/api/memberlist',
+        method:"get",
+    })
+}
+
+//会员一条数据
+export const reqvipListOne=(id)=>{
+    return axios({
+        url:baseUrl+'/api/memberinfo',
+        method:"get",
+        params:id
+    })
+}
+
+//会员编辑
+export const reqvipEdit=(data)=>{
+    return axios({
+        url:"/api/memberedit",
+        method:"post",
+        data:data
+    })
+}
+
+
+
+
+

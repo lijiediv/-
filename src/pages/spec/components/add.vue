@@ -94,6 +94,7 @@ export default {
       reqspecsAdd(this.form).then((res) => {
         this.empty();
         this.hide();
+        this.requestspecsList()
       });
     },
     // 新增属性
@@ -108,6 +109,7 @@ export default {
     },
     ...mapActions({
       requestcateList: "cate/requestcateList",
+      requestspecsList: "specs/requestspecsList",
     }),
 
     // 获取一条数据
@@ -130,6 +132,7 @@ export default {
   },
   mounted() {
     this.requestcateList();
+    this.requestspecsList();
   },
 };
 </script>
