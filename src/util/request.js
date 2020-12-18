@@ -1,6 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 
+//生产环境要置空
 const baseUrl='/api'
 
 // 响应拦截
@@ -356,7 +357,7 @@ export const reqvipListOne=(id)=>{
 //会员编辑
 export const reqvipEdit=(data)=>{
     return axios({
-        url:"/api/memberedit",
+        url:baseUrl+"/api/memberedit",
         method:"post",
         data:data
     })

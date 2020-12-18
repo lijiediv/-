@@ -17,7 +17,7 @@ Vue.use(ElementUI);
 //导入仓库
 import store from './store/index'
 
-//图片路径
+//图片路径  生产环境要置空
 Vue.prototype.$perImg="http://localhost:3000"
 
 

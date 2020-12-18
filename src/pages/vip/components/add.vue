@@ -47,7 +47,7 @@ export default {
     return {
       width: "160px",
       form: {
-        id: "",
+        uid: "",
         nickname: "",
         phone: "",
         password: "",
@@ -66,15 +66,18 @@ export default {
 
     // 查看一条数据
     look(id){
-      reqvipListOne({id:id}).then(res=>{
-        // this.form=res.data.list
+      reqvipListOne({uid:id}).then(res=>{
+        this.form=res.data.list
+        // console.log(res)
       })
     },
     //修改
     update() {
       reqvipEdit(this.form).then((res) => {
+        
         this.hide();
         this.requestvipList();
+        // console.log(res)
       });
     },
 
